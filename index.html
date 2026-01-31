@@ -25,6 +25,8 @@
        the CPU【353555555669613†L123-L131】.  We use the vanilla bundle here.
   -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+  <!-- Chart.js for sample dashboard charts in the analytics section -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 
   <!-- Import the Inter and Montserrat font families from Google Fonts.  These
        fonts provide the clean, bold sans‑serif typography requested by the
@@ -326,11 +328,9 @@
           description: 'Built a CNN–LSTM model to predict cardiovascular disease progression using Python and TensorFlow. Cleaned and visualised data with Pandas, NumPy and Matplotlib to generate clinical insights.',
           tags: ['Python', 'TensorFlow', 'CNN‑LSTM'],
           gradient: 'from-[#FF6B6B] via-[#FECACA] to-[#F47E2A]',
-          icon: (
-            <svg className="w-7 h-7 text-[#FF6B6B]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
-          )
+          iconColor: '#FF6B6B',
+          img: 'heart.png',
+          chipGradient: 'from-green-400 to-emerald-400'
         },
         {
           title: 'Student Support Agent',
@@ -339,11 +339,9 @@
           description: 'Created an automated helpdesk using Salesforce Flow Builder, Case customisations and Einstein Bot. Integrated dashboards and email alerts to reduce response time by 25%.',
           tags: ['Salesforce', 'Flow Builder', 'Einstein Bot'],
           gradient: 'from-[#5AC8FA] via-[#00A1E0] to-[#3B82F6]',
-          icon: (
-            <svg className="w-7 h-7 text-[#3B82F6]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v8m-4-4h8" />
-            </svg>
-          )
+          iconColor: '#3B82F6',
+          img: 'salesforce.png',
+          chipGradient: 'from-yellow-400 to-green-400'
         },
         {
           title: 'Portfolio & Analytics',
@@ -352,11 +350,9 @@
           description: 'Developed this responsive portfolio with React, Node.js and Tailwind CSS. Implemented SQL/MongoDB backend and embedded Power BI/Tableau dashboards for analytics.',
           tags: ['React', 'Node.js', 'Power BI', 'Tableau'],
           gradient: 'from-[#A47AFF] via-[#725CFF] to-[#C084FC]',
-          icon: (
-            <svg className="w-7 h-7 text-[#A47AFF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M12 3v18" />
-            </svg>
-          )
+          iconColor: '#A47AFF',
+          img: 'analytics.png',
+          chipGradient: 'from-purple-400 to-indigo-400'
         }
       ];
       return (
@@ -365,31 +361,58 @@
             <h2 className="text-3xl font-bold mb-6">Projects</h2>
             <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((proj) => (
-                <div key={proj.title} className="flex flex-col bg-black/50 border border-gray-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                  {/* Header with icon and metric */}
-                  <div className={`flex items-center justify-between px-4 py-3 text-sm font-medium text-white bg-gradient-to-r ${proj.gradient}`}>
-                    <div className="flex items-center gap-2">
-                      <div className="p-2 rounded-lg bg-black/20">
-                        {proj.icon}
+                <div key={proj.title} className="flex flex-col bg-black/50 border border-gray-700 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  {/* Gradient header with icon, subtitle and metric chip */}
+                  <div className={`flex items-center justify-between px-4 py-3 bg-gradient-to-r ${proj.gradient}`}>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: `${proj.iconColor}33` }}>
+                        {/* Icon based on project */}
+                        {proj.title === 'Cardiovascular Disease Modelling' && (
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" />
+                          </svg>
+                        )}
+                        {proj.title === 'Student Support Agent' && (
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 3h14a2 2 0 012 2v10a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2z" />
+                            <path d="M8 10h8M8 14h6" />
+                          </svg>
+                        )}
+                        {proj.title === 'Portfolio & Analytics' && (
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v18h18" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 13v4" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v7" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M18 7v10" />
+                          </svg>
+                        )}
                       </div>
                       <span className="font-semibold text-sm">{proj.subtitle}</span>
                     </div>
-                    <span className="text-xs md:text-sm font-semibold uppercase tracking-wider">{proj.metric}</span>
+                    {/* Metric chip */}
+                    <span className={`px-3 py-1 text-xs font-semibold rounded-full text-black bg-gradient-to-r ${proj.chipGradient}`}>
+                      {proj.metric}
+                    </span>
                   </div>
+                  {/* Project image */}
+                  <img src={proj.img} alt={`${proj.title} image`} className="w-full h-40 object-cover" />
+                  {/* Body */}
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-semibold mb-2 text-white">{proj.title}</h3>
+                    <h3 className="text-lg font-semibold mb-2">{proj.title}</h3>
                     <p className="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">{proj.description}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {proj.tags.map((tag) => (
-                        <span key={tag} className="text-xs px-2 py-1 bg-[#5f6cff]/20 text-[#5f6cff] rounded-full">
+                        <span key={tag} className="text-xs px-2 py-1 rounded" style={{ backgroundColor: `${proj.iconColor}33`, color: proj.iconColor }}>
                           {tag}
                         </span>
                       ))}
                     </div>
                     <div className="mt-auto text-right">
-                      <a href="#" className="inline-flex items-center gap-1 text-sm font-semibold text-[#FF6B6B] hover:underline">
+                      <a href="#" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: proj.iconColor }}>
                         View Code
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M12.293 3.293a1 1 0 011.414 0L18 7.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L15.586 10H6a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" /></svg>
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M12.293 3.293a1 1 0 011.414 0L18 7.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L15.586 10H6a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" />
+                        </svg>
                       </a>
                     </div>
                   </div>
@@ -409,35 +432,65 @@
       // colour used for the title and progress bars.
       const categories = [
         {
-          name: 'Languages & Tools',
-          color: '#F47E2A',
+          // Core programming languages for software development.  The angled
+          // brackets icon represents source code and markup.  A descriptive
+          // tagline appears beneath the category name.
+          name: 'Languages',
+          description: 'Core programming languages for software development',
+          color: '#FF6B6B',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              {/* Left angle bracket */}
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 6l-4 6 4 6" />
+              {/* Right angle bracket */}
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 6l4 6-4 6" />
+            </svg>
+          ),
           skills: [
             { name: 'Python', level: 90 },
-            { name: 'Java', level: 80 },
-            { name: 'SQL', level: 70 },
-            { name: 'MongoDB', level: 70 },
-            { name: 'Git', level: 85 }
+            { name: 'Java', level: 85 },
+            { name: 'JavaScript', level: 80 },
+            { name: 'HTML/CSS', level: 85 }
           ]
         },
         {
-          name: 'AI/ML & Analytics',
-          color: '#FF6B6B',
+          // Machine learning frameworks and data science tools.  A star icon
+          // symbolises innovation and the cutting‑edge nature of AI/ML.
+          name: 'AI / ML',
+          description: 'Machine learning frameworks and data science tools',
+          color: '#A47AFF',
+          icon: (
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              {/* Five‑pointed star */}
+              <path d="M12 2.5l2.6 5.3 5.8.8-4.2 4.1 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.2-4.1 5.8-.8z" />
+            </svg>
+          ),
           skills: [
             { name: 'TensorFlow', level: 85 },
-            { name: 'Pandas', level: 85 },
-            { name: 'NumPy', level: 80 },
-            { name: 'Power BI', level: 80 },
-            { name: 'Tableau', level: 75 }
+            { name: 'Pandas', level: 90 },
+            { name: 'NumPy', level: 88 },
+            { name: 'Matplotlib', level: 82 },
+            { name: 'CNN‑LSTM', level: 80 }
           ]
         },
         {
-          name: 'Frameworks & CRM',
+          // Modern frameworks and libraries for building scalable applications.
+          // The stacked bars icon conveys layers and composability inherent to
+          // frameworks like React and Node.js.
+          name: 'Frameworks & Libraries',
+          description: 'Modern frameworks for building scalable applications',
           color: '#5AC8FA',
+          icon: (
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <rect x="4" y="5" width="16" height="2" rx="1" />
+              <rect x="4" y="10" width="16" height="2" rx="1" />
+              <rect x="4" y="15" width="16" height="2" rx="1" />
+            </svg>
+          ),
           skills: [
             { name: 'React', level: 85 },
-            { name: 'Node.js', level: 75 },
-            { name: 'Bootstrap', level: 70 },
-            { name: 'Salesforce', level: 80 }
+            { name: 'Node.js', level: 78 },
+            { name: 'Bootstrap', level: 80 }
           ]
         }
       ];
@@ -448,27 +501,34 @@
             <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {categories.map((category) => (
                 <div key={category.name} className="bg-black/50 border border-gray-700 rounded-2xl p-6 shadow-lg">
-                  {/* Category title with color indicator */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: category.color }}></div>
-                    <h3 className="text-xl font-semibold" style={{ color: category.color }}>{category.name}</h3>
-                  </div>
-                    <div className="space-y-4">
-                      {category.skills.map((skill) => (
-                        <div key={skill.name}>
-                          <div className="flex justify-between items-center mb-1">
-                            <span className="text-gray-200 text-sm md:text-base">{skill.name}</span>
-                            <span className="text-xs text-gray-400">{skill.level}%</span>
-                          </div>
-                          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                            <div
-                              className="h-full rounded-full"
-                              style={{ width: `${skill.level}%`, backgroundImage: `linear-gradient(to right, ${category.color}, ${category.color}AA)` }}
-                            ></div>
-                          </div>
-                        </div>
-                      ))}
+                  {/* Category header with icon, name and tagline */}
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="p-2 rounded-lg" style={{ backgroundColor: `${category.color}33` }}>
+                      {category.icon}
                     </div>
+                    <div>
+                      <h3 className="text-lg font-semibold" style={{ color: category.color }}>{category.name}</h3>
+                      {category.description && (
+                        <p className="text-xs text-gray-400 leading-snug mt-0.5">{category.description}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    {category.skills.map((skill) => (
+                      <div key={skill.name}>
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-gray-200 text-sm md:text-base">{skill.name}</span>
+                          <span className="text-xs text-gray-400">{skill.level}%</span>
+                        </div>
+                        <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full"
+                            style={{ width: `${skill.level}%`, backgroundImage: `linear-gradient(to right, ${category.color}, ${category.color}AA)` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -534,10 +594,26 @@
                       {/* Icon and headings */}
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${badge.iconColor}33` }}>
-                          {/* Icon placeholder: small circle to hint at badge category */}
-                          <svg className="w-5 h-5" fill="currentColor" style={{ color: badge.iconColor }} viewBox="0 0 20 20">
-                            <circle cx="10" cy="10" r="5" />
-                          </svg>
+                          {/* Render icon based on badge label */}
+                          {badge.label === 'AI' && (
+                            // AI badge uses a star icon to evoke innovation and creativity
+                            <svg className="w-5 h-5" fill="currentColor" style={{ color: badge.iconColor }} viewBox="0 0 24 24">
+                              <path d="M12 2.5l2.6 5.3 5.8.8-4.2 4.1 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.2-4.1 5.8-.8z" />
+                            </svg>
+                          )}
+                          {badge.label === 'CRM' && (
+                            // CRM badge uses a chat bubble icon representing customer conversations
+                            <svg className="w-5 h-5" fill="currentColor" style={{ color: badge.iconColor }} viewBox="0 0 24 24">
+                              <path d="M5 3h14a2 2 0 012 2v10a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2z" />
+                            </svg>
+                          )}
+                          {badge.label === 'FULL' && (
+                            // Full‑stack badge uses curly braces to denote code blocks
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: badge.iconColor }} viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 4c-1.5 2-1.5 4 0 6s1.5 4 0 6" />
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M15 4c1.5 2 1.5 4 0 6s-1.5 4 0 6" />
+                            </svg>
+                          )}
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold" style={{ color: badge.iconColor }}>{badge.title}</h3>
@@ -570,35 +646,199 @@
     }
 
     // Analytics section emphasising Power BI and Tableau proficiency.
+    // Analytics section with feature cards and sample dashboard preview.
     function Analytics() {
+      // Feature cards describing analytics capabilities
+      const features = [
+        {
+          title: 'Data Integration',
+          description: 'Connect and transform data from multiple sources into a unified, clean dataset.',
+          color: '#F47E2A',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )
+        },
+        {
+          title: 'Data Cleaning',
+          description: 'Preprocess and prepare data by handling missing values and outliers for reliable analysis.',
+          color: '#FF6B6B',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M3 12h18M3 17h18" />
+            </svg>
+          )
+        },
+        {
+          title: 'Trend Analysis',
+          description: 'Identify patterns and forecast trends through statistical analysis and visual exploration.',
+          color: '#5AC8FA',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 14s1-1 2-2 4-3 6-1 4 3 6 2 2-2 2-2" />
+              <polyline points="4 12 4 14 6 14" />
+            </svg>
+          )
+        },
+        {
+          title: 'Collaboration',
+          description: 'Share insights and collaborate on reports through secure, interactive dashboards.',
+          color: '#A47AFF',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M23 21v-2a4 4 0 00-3-3.87" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 3.13a4 4 0 010 7.75" />
+            </svg>
+          )
+        },
+        {
+          title: 'Export & Publish',
+          description: 'Export reports and publish dashboards to cloud platforms for wider distribution.',
+          color: '#F47E2A',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v4h4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 20v-4h-4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 20h4v-4" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 4h-4v4" />
+            </svg>
+          )
+        },
+        {
+          title: 'Interactive Views',
+          description: 'Create engaging, interactive visualisations to explore data from multiple perspectives.',
+          color: '#A47AFF',
+          icon: (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3" />
+              <circle cx="12" cy="12" r="8" />
+            </svg>
+          )
+        }
+      ];
+
+      // Initialise charts once on mount using Chart.js
+      useEffect(() => {
+        if (window.Chart) {
+          // Bar chart: revenue trend
+          const barCtx = document.getElementById('barChart').getContext('2d');
+          new Chart(barCtx, {
+            type: 'bar',
+            data: {
+              labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+              datasets: [
+                {
+                  label: 'Revenue',
+                  data: [15, 22, 28, 35],
+                  backgroundColor: ['#5AC8FA', '#F47E2A', '#FF6B6B', '#A47AFF']
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+              },
+              scales: {
+                x: { display: false, grid: { display: false } },
+                y: { display: false, grid: { display: false } }
+              }
+            }
+          });
+          // Doughnut chart: category split
+          const donutCtx = document.getElementById('donutChart').getContext('2d');
+          new Chart(donutCtx, {
+            type: 'doughnut',
+            data: {
+              labels: ['A', 'B', 'C', 'D'],
+              datasets: [
+                {
+                  data: [40, 25, 20, 15],
+                  backgroundColor: ['#FF6B6B', '#5AC8FA', '#F47E2A', '#A47AFF'],
+                  borderWidth: 0
+                }
+              ]
+            },
+            options: {
+              cutout: '70%',
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+              }
+            }
+          });
+          // Line chart: growth rate
+          const lineCtx = document.getElementById('lineChart').getContext('2d');
+          new Chart(lineCtx, {
+            type: 'line',
+            data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+              datasets: [
+                {
+                  label: 'Growth',
+                  data: [10, 12, 15, 18, 25, 30],
+                  borderColor: '#A47AFF',
+                  backgroundColor: 'transparent',
+                  tension: 0.4
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+              },
+              scales: {
+                x: { display: false, grid: { display: false } },
+                y: { display: false, grid: { display: false } }
+              }
+            }
+          });
+        }
+      }, []);
+
       return (
-        <section id="analytics" className="py-16 px-4 bg-[#0a0a23]">
-          <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Analytics</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              I build interactive dashboards and data visualizations using Power BI and Tableau, converting raw data into actionable
-              insights for stakeholders.
+        <section id="analytics" className="py-20 px-4 bg-[#0a0a23]">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 text-center">Analytics</h2>
+            <p className="text-gray-300 max-w-3xl mx-auto text-center">
+              From cleaning raw data to building interactive dashboards in Power BI and Tableau, I create end-to-end analytics solutions.
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-12">
-              {/* Power BI card */}
-              <div className="flex flex-col items-center">
-                <div className="p-4 rounded-full bg-[#5f6cff]/20 border border-[#5f6cff]">
-                  {/* Represent analytics with a stack of bars icon */}
-                  <svg className="w-8 h-8 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 17v2m0-8v6m0-6V7m4 10v2m0-6v4m4 4v2m0-8v6m4 4v2m0-10v8m4 4v2m0-16v14" />
-                  </svg>
+            {/* Feature cards */}
+            <div className="mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+              {features.map((feat) => (
+                <div key={feat.title} className="bg-black/50 border border-gray-700 rounded-xl p-5 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 rounded-md" style={{ backgroundColor: `${feat.color}33` }}>
+                      <span style={{ color: feat.color }}>
+                        {feat.icon}
+                      </span>
+                    </div>
+                    <h3 className="font-semibold" style={{ color: feat.color }}>{feat.title}</h3>
+                  </div>
+                  <p className="text-gray-400 text-sm flex-grow">{feat.description}</p>
                 </div>
-                <span className="mt-3 text-lg font-semibold">Power BI</span>
+              ))}
+            </div>
+            {/* Dashboard preview */}
+            <h3 className="text-2xl font-semibold mt-16 mb-8 text-center">Sample Dashboard Preview</h3>
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+              <div className="bg-black/50 border border-gray-700 rounded-xl p-6 flex flex-col items-center">
+                <canvas id="barChart" width="200" height="160"></canvas>
+                <span className="mt-4 text-sm text-gray-300">Revenue Trend</span>
               </div>
-              {/* Tableau card */}
-              <div className="flex flex-col items-center">
-                <div className="p-4 rounded-full bg-[#5f6cff]/20 border border-[#5f6cff]">
-                  {/* Simple cross/star icon to hint at data blending */}
-                  <svg className="w-8 h-8 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12M6 12h12M9 9l6 6M15 9l-6 6" />
-                  </svg>
-                </div>
-                <span className="mt-3 text-lg font-semibold">Tableau</span>
+              <div className="bg-black/50 border border-gray-700 rounded-xl p-6 flex flex-col items-center">
+                <canvas id="donutChart" width="200" height="160"></canvas>
+                <span className="mt-4 text-sm text-gray-300">Category Split</span>
+              </div>
+              <div className="bg-black/50 border border-gray-700 rounded-xl p-6 flex flex-col items-center">
+                <canvas id="lineChart" width="200" height="160"></canvas>
+                <span className="mt-4 text-sm text-gray-300">Growth Rate</span>
               </div>
             </div>
           </div>
