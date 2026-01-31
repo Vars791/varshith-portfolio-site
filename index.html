@@ -121,26 +121,66 @@
     // with a translucent panel; an explanation of the technique can be found
     // in Braydon Coyer's article on building a glassmorphic navbar【246260729976967†L40-L63】.
     function Navbar() {
+      // Mobile menu state
       const [open, setOpen] = useState(false);
       const toggle = () => setOpen(!open);
       return (
         <nav className="fixed top-0 w-full backdrop-blur-md bg-black/30 border-b border-gray-700 z-50">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="#home" className="text-xl font-bold text-white">Varshith</a>
-            <button className="md:hidden text-gray-300 focus:outline-none" onClick={toggle} aria-label="Toggle menu">
-              {/* simple hamburger icon */}
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <div className={`flex-col md:flex-row md:flex space-y-4 md:space-y-0 md:space-x-6 text-gray-300 ${open ? 'flex mt-4' : 'hidden'} md:block`}>
+            {/* Logo / Name */}
+            <a href="#home" className="text-2xl font-bold" style={{ color: '#FF6B6B' }}>
+              AKULA.
+            </a>
+            {/* Desktop links */}
+            <div className="hidden md:flex space-x-6 text-gray-300">
               <a href="#experience" className="hover:text-[#FF6B6B]">Experience</a>
               <a href="#projects" className="hover:text-[#FF6B6B]">Projects</a>
               <a href="#skills" className="hover:text-[#FF6B6B]">Skills</a>
-              <a href="#certifications" className="hover:text-[#FF6B6B]">Certifications</a>
+              <a href="#certifications" className="hover:text-[#FF6B6B]">Badges</a>
               <a href="#analytics" className="hover:text-[#FF6B6B]">Analytics</a>
             </div>
+            {/* Social icons */}
+            <div className="hidden md:flex items-center space-x-4">
+              <a href="https://github.com/Vars791" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B6B]" aria-label="GitHub">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.66.5.5 5.66.5 12a11.5 11.5 0 008.17 11.01c.6.11.82-.26.82-.58v-2.03c-3.33.73-4.03-1.42-4.03-1.42a3.2 3.2 0 00-1.35-1.78c-1.1-.75.08-.74.08-.74a2.53 2.53 0 011.85 1.24 2.56 2.56 0 003.5.99 2.57 2.57 0 01.76-1.61c-2.66-.3-5.47-1.33-5.47-5.93a4.63 4.63 0 011.23-3.22 4.3 4.3 0 01.12-3.18s1-.31 3.3 1.23a11.5 11.5 0 016 0c2.3-1.54 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.63 4.63 0 011.23 3.22c0 4.61-2.81 5.62-5.48 5.92a2.88 2.88 0 01.82 2.24v3.32c0 .32.22.7.83.58A11.5 11.5 0 0023.5 12C23.5 5.66 18.34.5 12 .5z" />
+                </svg>
+              </a>
+              <a href="https://linkedin.com/in/akula-varshith" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B6B]" aria-label="LinkedIn">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8.59 20.57H5.67V9h2.92zM7.13 7.5a1.69 1.69 0 110-3.38 1.69 1.69 0 010 3.38zM20.57 20.57h-2.92v-5.7c0-1.36-.02-3.11-1.89-3.11-1.89 0-2.18 1.48-2.18 3v5.8h-2.92V9h2.8v1.59h.04a3.07 3.07 0 012.77-1.52c2.96 0 3.51 1.95 3.51 4.48z" />
+                </svg>
+              </a>
+            </div>
+            {/* Mobile hamburger */}
+            <button className="md:hidden text-gray-300 focus:outline-none" onClick={toggle} aria-label="Toggle menu">
+              <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
+          {/* Mobile menu panel */}
+          {open && (
+            <div className="md:hidden bg-[#0a0a23]/90 backdrop-blur-lg border-t border-gray-700 px-4 py-4 space-y-2">
+              <a href="#experience" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-[#FF6B6B]">Experience</a>
+              <a href="#projects" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-[#FF6B6B]">Projects</a>
+              <a href="#skills" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-[#FF6B6B]">Skills</a>
+              <a href="#certifications" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-[#FF6B6B]">Badges</a>
+              <a href="#analytics" onClick={() => setOpen(false)} className="block text-gray-300 hover:text-[#FF6B6B]">Analytics</a>
+              <div className="flex space-x-4 pt-2 border-t border-gray-700 mt-2">
+                <a href="https://github.com/Vars791" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#FF6B6B]" aria-label="GitHub">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .5C5.66.5.5 5.66.5 12a11.5 11.5 0 008.17 11.01c.6.11.82-.26.82-.58v-2.03c-3.33.73-4.03-1.42-4.03-1.42a3.2 3.2 0 00-1.35-1.78c-1.1-.75.08-.74.08-.74a2.53 2.53 0 011.85 1.24 2.56 2.56 0 003.5.99 2.57 2.57 0 01.76-1.61c-2.66-.3-5.47-1.33-5.47-5.93a4.63 4.63 0 011.23-3.22 4.3 4.3 0 01.12-3.18s1-.31 3.3 1.23a11.5 11.5 0 016 0c2.3-1.54 3.3-1.23 3.3-1.23a4.3 4.3 0 01.12 3.18 4.63 4.63 0 011.23 3.22c0 4.61-2.81 5.62-5.48 5.92a2.88 2.88 0 01.82 2.24v3.32c0 .32.22.7.83.58A11.5 11.5 0 0023.5 12C23.5 5.66 18.34.5 12 .5z" />
+                  </svg>
+                </a>
+                <a href="https://linkedin.com/in/akula-varshith" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#FF6B6B]" aria-label="LinkedIn">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8.59 20.57H5.67V9h2.92zM7.13 7.5a1.69 1.69 0 110-3.38 1.69 1.69 0 010 3.38zM20.57 20.57h-2.92v-5.7c0-1.36-.02-3.11-1.89-3.11-1.89 0-2.18 1.48-2.18 3v5.8h-2.92V9h2.8v1.59h.04a3.07 3.07 0 012.77-1.52c2.96 0 3.51 1.95 3.51 4.48z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          )}
         </nav>
       );
     }
@@ -220,38 +260,56 @@
         }
       ];
       return (
-        <section id="experience" className="py-16 px-4 bg-[#0a0a23]">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <h2 className="text-3xl font-bold mb-4">Experience</h2>
-            {/* Main card with role details */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold mb-2">Software Development Intern</h3>
-                <h4 className="text-[#FF6B6B] font-medium mb-4">Prodigy InfoTech (Remote)</h4>
-                <ul className="list-disc list-inside text-gray-300 space-y-2">
-                  <li>Contributed to full‑stack projects using Python, JavaScript and React.</li>
-                  <li>Collaborated with cross‑functional teams to design and implement scalable REST APIs and data pipelines.</li>
-                  <li>Refactored code and monitored performance to improve feature efficiency by 15%.</li>
-                  <li>Enhanced Git workflows and documentation, improving collaboration speed.</li>
-                </ul>
-              </div>
-              <div className="space-y-4">
-                {highlights.map((item) => (
-                  <div key={item.title} className="flex items-start gap-4 bg-black/40 border border-gray-700 p-4 rounded-lg shadow-md">
-                    <div className="p-3 rounded-full" style={{ backgroundColor: `${item.color}20` }}>
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h5 className="font-semibold text-lg" style={{ color: item.color }}>{item.title}</h5>
-                      <p className="text-gray-300 text-sm mt-1">{item.description}</p>
-                    </div>
+        <section id="experience" className="py-20 px-4 bg-[#0a0a23]">
+          <div className="max-w-6xl mx-auto space-y-10">
+            <h2 className="text-3xl font-bold mb-6">Experience</h2>
+            {/* Gradient bordered card */}
+            <div className="rounded-2xl p-px bg-gradient-to-r from-[#FF6B6B] via-[#5F6CFF] to-[#A47AFF] shadow-lg">
+              <div className="bg-black/60 rounded-[calc(1rem-1px)] p-8">
+                <div className="md:flex md:justify-between md:items-start gap-8">
+                  {/* Role details */}
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold mb-1">Software Development Intern</h3>
+                    <h4 className="text-[#FF6B6B] font-medium mb-4">Prodigy InfoTech · Remote</h4>
+                    <ul className="space-y-2 text-gray-300 text-sm md:text-base">
+                      <li className="flex items-start gap-2">
+                        <span className="mt-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#FF6B6B' }}></span>
+                        <span>Contributed to full‑stack projects using Python, JavaScript and React.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="mt-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#5F6CFF' }}></span>
+                        <span>Collaborated with cross‑functional teams to design and implement scalable REST APIs and data pipelines.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="mt-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#A47AFF' }}></span>
+                        <span>Refactored code and monitored performance to improve feature efficiency by 15%.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="mt-1 w-2 h-2 rounded-full" style={{ backgroundColor: '#5AC8FA' }}></span>
+                        <span>Enhanced Git workflows and documentation, improving collaboration speed.</span>
+                      </li>
+                    </ul>
                   </div>
-                ))}
+                  {/* Highlight stats */}
+                  <div className="mt-8 md:mt-0 flex flex-col gap-4 md:w-1/3">
+                    {highlights.map((item) => (
+                      <div key={item.title} className="flex items-start gap-3 rounded-lg p-4 bg-black/40 border border-gray-700" style={{ boxShadow: `0 0 0 2px ${item.color}55` }}>
+                        <div className="p-3 rounded-full" style={{ backgroundColor: `${item.color}30` }}>
+                          {item.icon}
+                        </div>
+                        <div>
+                          <h5 className="font-semibold text-base" style={{ color: item.color }}>{item.title}</h5>
+                          <p className="text-gray-400 text-xs mt-1 md:text-sm">{item.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Reflection quote */}
+                <div className="mt-8 bg-black/40 border border-gray-700 p-4 rounded-lg">
+                  <p className="italic text-gray-400 text-sm md:text-base">“My internship at Prodigy InfoTech strengthened my debugging, testing, and optimisation techniques while delivering production‑ready components.”</p>
+                </div>
               </div>
-            </div>
-            {/* Reflection */}
-            <div className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-md">
-              <p className="italic text-gray-400">“My internship at Prodigy InfoTech strengthened my debugging, testing, and optimisation techniques while delivering production‑ready components.”</p>
             </div>
           </div>
         </section>
@@ -262,49 +320,75 @@
     function Projects() {
       const projects = [
         {
-          title: 'Predictive Modelling for Cardiovascular Disease',
-          metric: '90% accuracy',
-          description: 'Developed a CNN–LSTM deep learning model using Python and TensorFlow to predict cardiovascular disease risk. Performed data preprocessing with NumPy and Pandas and visualised insights using Matplotlib.',
+          title: 'Cardiovascular Disease Modelling',
+          subtitle: 'CNN–LSTM Predictor',
+          metric: '90% Accuracy',
+          description: 'Built a CNN–LSTM model to predict cardiovascular disease progression using Python and TensorFlow. Cleaned and visualised data with Pandas, NumPy and Matplotlib to generate clinical insights.',
           tags: ['Python', 'TensorFlow', 'CNN‑LSTM'],
-          gradient: 'from-pink-500 to-rose-500'
+          gradient: 'from-[#FF6B6B] via-[#FECACA] to-[#F47E2A]',
+          icon: (
+            <svg className="w-7 h-7 text-[#FF6B6B]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          )
         },
         {
-          title: 'Student Support Helpdesk Agent',
-          metric: '25% faster resolution',
-          description: 'Built an automated support system using Salesforce Flow Builder, Case Object customisation and Einstein Bot for real‑time assistance. Integrated dashboards, email alerts and Lightning components to reduce response time by 25%.',
+          title: 'Student Support Agent',
+          subtitle: 'Salesforce Bot',
+          metric: '25% Faster Support',
+          description: 'Created an automated helpdesk using Salesforce Flow Builder, Case customisations and Einstein Bot. Integrated dashboards and email alerts to reduce response time by 25%.',
           tags: ['Salesforce', 'Flow Builder', 'Einstein Bot'],
-          gradient: 'from-blue-500 to-sky-500'
+          gradient: 'from-[#5AC8FA] via-[#00A1E0] to-[#3B82F6]',
+          icon: (
+            <svg className="w-7 h-7 text-[#3B82F6]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v8m-4-4h8" />
+            </svg>
+          )
         },
         {
-          title: 'Portfolio Website with Analytics',
-          metric: 'Full‑stack & dashboards',
-          description: 'Designed and developed a responsive portfolio using React, Node.js and Tailwind CSS with a SQL/MongoDB backend. Embedded Power BI and Tableau dashboards to provide interactive analytics and deployed to cloud hosting.',
+          title: 'Portfolio & Analytics',
+          subtitle: 'Full‑Stack Dashboard',
+          metric: 'Interactive Dashboards',
+          description: 'Developed this responsive portfolio with React, Node.js and Tailwind CSS. Implemented SQL/MongoDB backend and embedded Power BI/Tableau dashboards for analytics.',
           tags: ['React', 'Node.js', 'Power BI', 'Tableau'],
-          gradient: 'from-purple-500 to-fuchsia-500'
+          gradient: 'from-[#A47AFF] via-[#725CFF] to-[#C084FC]',
+          icon: (
+            <svg className="w-7 h-7 text-[#A47AFF]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M12 3v18" />
+            </svg>
+          )
         }
       ];
       return (
-        <section id="projects" className="py-16 px-4 bg-[#0a0a23]">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <h2 className="text-3xl font-bold mb-4">Projects</h2>
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-3">
+        <section id="projects" className="py-20 px-4 bg-[#0a0a23]">
+          <div className="max-w-6xl mx-auto space-y-10">
+            <h2 className="text-3xl font-bold mb-6">Projects</h2>
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((proj) => (
-                <div key={proj.title} className="flex flex-col bg-black/40 border border-gray-700 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                  {/* Metric bar with gradient */}
-                  <div className={`px-4 py-2 text-sm font-medium text-black bg-gradient-to-r ${proj.gradient}`}>{proj.metric}</div>
-                  <div className="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-2xl font-semibold mb-2 text-white">{proj.title}</h3>
-                      <p className="text-gray-300 text-sm leading-relaxed mb-4">{proj.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {proj.tags.map((tag) => (
-                          <span key={tag} className="text-xs px-2 py-1 bg-[#5f6cff]/20 text-[#5f6cff] rounded-full">{tag}</span>
-                        ))}
+                <div key={proj.title} className="flex flex-col bg-black/50 border border-gray-700 rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  {/* Header with icon and metric */}
+                  <div className={`flex items-center justify-between px-4 py-3 text-sm font-medium text-white bg-gradient-to-r ${proj.gradient}`}>
+                    <div className="flex items-center gap-2">
+                      <div className="p-2 rounded-lg bg-black/20">
+                        {proj.icon}
                       </div>
+                      <span className="font-semibold text-sm">{proj.subtitle}</span>
                     </div>
-                    <div className="mt-auto flex justify-end">
-                      <a href="#" className="text-sm font-semibold text-[#FF6B6B] hover:underline flex items-center gap-1">
-                        Code
+                    <span className="text-xs md:text-sm font-semibold uppercase tracking-wider">{proj.metric}</span>
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-semibold mb-2 text-white">{proj.title}</h3>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">{proj.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {proj.tags.map((tag) => (
+                        <span key={tag} className="text-xs px-2 py-1 bg-[#5f6cff]/20 text-[#5f6cff] rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-auto text-right">
+                      <a href="#" className="inline-flex items-center gap-1 text-sm font-semibold text-[#FF6B6B] hover:underline">
+                        View Code
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M12.293 3.293a1 1 0 011.414 0L18 7.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L15.586 10H6a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" /></svg>
                       </a>
                     </div>
@@ -319,72 +403,72 @@
 
     // Skills visualiser with progress bars for various categories.
     function Skills() {
+      // Consolidated categories to better mirror the provided design.  The new groupings
+      // bring related languages, analytics tools and frameworks together into
+      // three cards, similar to the screenshot.  Each category has a distinct
+      // colour used for the title and progress bars.
       const categories = [
         {
-          name: 'Languages',
+          name: 'Languages & Tools',
+          color: '#F47E2A',
           skills: [
             { name: 'Python', level: 90 },
             { name: 'Java', level: 80 },
-            { name: 'JavaScript', level: 75 }
-          ]
-        },
-        {
-          name: 'AI / ML & Data',
-          skills: [
-            { name: 'TensorFlow', level: 85 },
-            { name: 'Pandas', level: 85 },
-            { name: 'NumPy', level: 80 }
-          ]
-        },
-        {
-          name: 'Frameworks & Libraries',
-          skills: [
-            { name: 'React', level: 85 },
-            { name: 'Node.js', level: 75 },
-            { name: 'Bootstrap', level: 70 }
-          ]
-        },
-        {
-          name: 'Tools & Databases',
-          skills: [
             { name: 'SQL', level: 70 },
             { name: 'MongoDB', level: 70 },
             { name: 'Git', level: 85 }
           ]
         },
         {
-          name: 'Analytics & CRM',
+          name: 'AI/ML & Analytics',
+          color: '#FF6B6B',
           skills: [
+            { name: 'TensorFlow', level: 85 },
+            { name: 'Pandas', level: 85 },
+            { name: 'NumPy', level: 80 },
             { name: 'Power BI', level: 80 },
-            { name: 'Tableau', level: 75 },
+            { name: 'Tableau', level: 75 }
+          ]
+        },
+        {
+          name: 'Frameworks & CRM',
+          color: '#5AC8FA',
+          skills: [
+            { name: 'React', level: 85 },
+            { name: 'Node.js', level: 75 },
+            { name: 'Bootstrap', level: 70 },
             { name: 'Salesforce', level: 80 }
           ]
         }
       ];
       return (
-        <section id="skills" className="py-16 px-4 bg-[#0a0a23]">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <h2 className="text-3xl font-bold mb-4">Skills</h2>
+        <section id="skills" className="py-20 px-4 bg-[#0a0a23]">
+          <div className="max-w-6xl mx-auto space-y-10">
+            <h2 className="text-3xl font-bold mb-6">Skills</h2>
             <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {categories.map((category) => (
-                <div key={category.name} className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg">
-                  <h3 className="text-xl font-semibold mb-4 text-[#FF6B6B]">{category.name}</h3>
-                  <div className="space-y-4">
-                    {category.skills.map((skill) => (
-                      <div key={skill.name}>
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-gray-200">{skill.name}</span>
-                          <span className="text-xs text-gray-400">{skill.level}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-700 rounded-full">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-[#5f6cff] to-[#725cff]"
-                            style={{ width: `${skill.level}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
+                <div key={category.name} className="bg-black/50 border border-gray-700 rounded-2xl p-6 shadow-lg">
+                  {/* Category title with color indicator */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: category.color }}></div>
+                    <h3 className="text-xl font-semibold" style={{ color: category.color }}>{category.name}</h3>
                   </div>
+                    <div className="space-y-4">
+                      {category.skills.map((skill) => (
+                        <div key={skill.name}>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-gray-200 text-sm md:text-base">{skill.name}</span>
+                            <span className="text-xs text-gray-400">{skill.level}%</span>
+                          </div>
+                          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${skill.level}%`, backgroundImage: `linear-gradient(to right, ${category.color}, ${category.color}AA)` }}
+                            ></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                 </div>
               ))}
             </div>
@@ -397,42 +481,85 @@
     function Certifications() {
       const badges = [
         {
+          label: 'AI',
           title: 'Oracle Certified',
           subtitle: 'Generative AI Specialist',
-          color: '#F47E2A'
+          issuer: 'Oracle',
+          description: 'Completed Oracle’s Generative AI certification, covering large language models, prompt engineering and enterprise AI applications.',
+          tags: ['Generative AI', 'LLMs', 'Oracle Cloud'],
+          gradient: 'from-[#F47E2A] via-[#FF6B6B] to-[#FECACA]',
+          iconColor: '#F47E2A'
         },
         {
+          label: 'CRM',
           title: 'Salesforce Certified',
           subtitle: 'Agentforce Specialist',
-          color: '#00A1E0'
+          issuer: 'Salesforce',
+          description: 'Earned the Salesforce Agentforce credential by building automations, case management flows and Lightning components for customer support.',
+          tags: ['CRM', 'Einstein Bot', 'Flow Builder'],
+          gradient: 'from-[#00A1E0] via-[#5AC8FA] to-[#3B82F6]',
+          iconColor: '#00A1E0'
         },
         {
+          label: 'FULL',
           title: 'Wipro Certified',
-          subtitle: 'Java Full Stack',
-          color: '#A47AFF'
-        },
-        {
-          title: 'Deloitte Certified',
-          subtitle: 'Data Analytics',
-          color: '#5AC8FA'
+          subtitle: 'Java Full Stack Developer',
+          issuer: 'Wipro',
+          description: 'Mastered full‑stack development with Java, Spring Boot, and modern frontend frameworks through Wipro’s intensive program.',
+          tags: ['Java', 'Spring Boot', 'Full Stack'],
+          gradient: 'from-[#A47AFF] via-[#725CFF] to-[#C084FC]',
+          iconColor: '#A47AFF'
         }
       ];
       return (
-        <section id="certifications" className="py-16 px-4 bg-[#0a0a23]">
-          <div className="max-w-6xl mx-auto space-y-8">
-            <h2 className="text-3xl font-bold mb-4">Digital Badges</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <section id="certifications" className="py-20 px-4 bg-[#0a0a23]">
+          <div className="max-w-6xl mx-auto space-y-10">
+            <h2 className="text-3xl font-bold mb-6">Digital Badges</h2>
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {badges.map((badge) => (
-                <div key={badge.title} className="bg-black/40 border border-gray-700 rounded-lg shadow-lg p-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-lg" style={{ backgroundColor: `${badge.color}33` }}></div>
-                    <div>
-                      <h3 className="text-lg font-semibold" style={{ color: badge.color }}>{badge.title}</h3>
-                      <p className="text-sm text-gray-400">{badge.subtitle}</p>
-                    </div>
+                <div key={badge.title} className="relative">
+                  {/* Label chip floats above the card */}
+                  <div
+                    className="absolute -top-3 left-4 px-2 py-0.5 text-[10px] font-semibold text-black rounded-md"
+                    style={{
+                      backgroundImage: `linear-gradient(to right, ${badge.iconColor}AA, ${badge.iconColor})`,
+                      color: 'white'
+                    }}
+                  >
+                    {badge.label}
                   </div>
-                  <div className="mt-auto">
-                    <span className="text-xs text-gray-500">Certified</span>
+                  {/* Outer gradient border */}
+                  <div className={`bg-gradient-to-r ${badge.gradient} p-px rounded-2xl shadow-md`}> 
+                    <div className="bg-black/60 rounded-2xl p-6 flex flex-col h-full">
+                      {/* Icon and headings */}
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${badge.iconColor}33` }}>
+                          {/* Icon placeholder: small circle to hint at badge category */}
+                          <svg className="w-5 h-5" fill="currentColor" style={{ color: badge.iconColor }} viewBox="0 0 20 20">
+                            <circle cx="10" cy="10" r="5" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold" style={{ color: badge.iconColor }}>{badge.title}</h3>
+                          <p className="text-sm text-gray-400">{badge.subtitle}</p>
+                        </div>
+                      </div>
+                      {/* Description */}
+                      <p className="text-gray-300 text-xs flex-grow">
+                        {badge.description}
+                      </p>
+                      {/* Issuer and tags */}
+                      <div className="mt-4 text-xs text-gray-500">
+                        <span>Issued by {badge.issuer}</span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {badge.tags.map((tag) => (
+                          <span key={tag} className="px-2 py-1 text-[10px] font-medium rounded-full" style={{ backgroundColor: `${badge.iconColor}33`, color: badge.iconColor }}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
