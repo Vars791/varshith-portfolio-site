@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akula Varshith | Portfolio</title>
+  <!--
+    Tailwind CSS loaded via the Play CDN.  According to Tailwind's documentation,
+    the Play CDN can be used directly in the browser without any build step【233874177369343†L275-L297】.  It
+    includes all of Tailwind's utility classes and supports arbitrary values
+    like custom colours (e.g. bg-[#FF6B6B]) and filters such as backdrop‑blur.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Load React and ReactDOM from the official unpkg CDN.  These are
+       production builds that expose the React and ReactDOM globals. -->
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <!-- Babel will transpile the JSX used below directly in the browser.  The
+       @babel/standalone script is distributed on unpkg. -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- tsParticles is a lightweight particle animation library.  According
+       to the CoderPad guide, tsParticles provides first‑party integrations
+       with popular frameworks and includes an FPS limiter to avoid overloading
+       the CPU【353555555669613†L123-L131】.  We use the vanilla bundle here.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+  <!-- Import the Inter and Montserrat font families from Google Fonts.  These
+       fonts provide the clean, bold sans‑serif typography requested by the
+       user.  If the fonts fail to load the browser will fallback to the
+       system sans‑serif stack defined on the body element. -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Apply a deep charcoal background to the body.  Using plain CSS here
+       avoids FOUC (flash of unstyled content) before Tailwind loads. */
+    body {
+      margin: 0;
+      background-color: #0a0a23;
+    }
+  </style>
+</head>
+<body class="text-white font-[Inter,Montserrat,sans-serif]">
+  <!-- Root element where the React app will mount -->
+  <div id="root"></div>
+  <script type="text/babel">
+    /*
+     * React Portfolio for Akula Varshith
+     *
+     * This single file application leverages React and Tailwind CSS to
+     * implement the design aesthetic described by the user.  Tailwind is
+     * loaded via the Play CDN which means we can use utility classes
+     * directly in our markup and even arbitrary colours (e.g. bg-[#FF6B6B]).
+     * The hero section features an animated particle mesh created with
+     * tsParticles.  The sticky navigation bar uses a glassmorphism effect
+     * achieved with backdrop‑blur and semi‑transparent backgrounds.  The
+     * sections that follow outline experience, projects, skills, certifications
+     * and analytics (Power BI/Tableau proficiency).
+     */
+
+    const { useEffect, useState } = React;
+
+    // Particle background component using the global tsParticles object.
+    function ParticlesBackground() {
+      useEffect(() => {
+        if (window.tsParticles) {
+          window.tsParticles.load('tsparticles', {
+            fullScreen: { enable: false },
+            background: { color: '#0a0a23' },
+            particles: {
+              number: { value: 60, density: { enable: true, area: 800 } },
+              color: { value: ['#5f6cff', '#725cff'] },
+              shape: { type: 'circle' },
+              opacity: { value: 0.5 },
+              size: { value: { min: 1, max: 3 } },
+              links: {
+                enable: true,
+                color: '#5f6cff',
+                distance: 140,
+                opacity: 0.3,
+                width: 1.2
+              },
+              move: {
+                enable: true,
+                speed: 1.5,
+                direction: 'none',
+                random: false,
+                straight: false,
+                outModes: { default: 'out' }
+              }
+            },
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: 'repulse' },
+                onClick: { enable: true, mode: 'push' },
+                resize: true
+              },
+              modes: {
+                repulse: { distance: 200, duration: 0.4 },
+                push: { quantity: 4 }
+              }
+            }
+          });
+        }
+      }, []);
+      return React.createElement('div', {
+        id: 'tsparticles',
+        style: {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          pointerEvents: 'none'
+        }
+      });
+    }
+
+    // Sticky glassmorphism navbar.  Glassmorphism applies a background blur
+    // with a translucent panel; an explanation of the technique can be found
+    // in Braydon Coyer's article on building a glassmorphic navbar【246260729976967†L40-L63】.
+    function Navbar() {
+      const [open, setOpen] = useState(false);
+      const toggle = () => setOpen(!open);
+      return (
+        <nav className="fixed top-0 w-full backdrop-blur-md bg-black/30 border-b border-gray-700 z-50">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#home" className="text-xl font-bold text-white">Varshith</a>
+            <button className="md:hidden text-gray-300 focus:outline-none" onClick={toggle} aria-label="Toggle menu">
+              {/* simple hamburger icon */}
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div className={`flex-col md:flex-row md:flex space-y-4 md:space-y-0 md:space-x-6 text-gray-300 ${open ? 'flex mt-4' : 'hidden'} md:block`}>
+              <a href="#experience" className="hover:text-[#FF6B6B]">Experience</a>
+              <a href="#projects" className="hover:text-[#FF6B6B]">Projects</a>
+              <a href="#skills" className="hover:text-[#FF6B6B]">Skills</a>
+              <a href="#certifications" className="hover:text-[#FF6B6B]">Certifications</a>
+              <a href="#analytics" className="hover:text-[#FF6B6B]">Analytics</a>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    // Hero section with call to action and analytics focus.
+    function Hero() {
+      return (
+        <section id="home" className="relative min-h-screen flex items-center justify-center px-4 pt-20 pb-12">
+          {/* Particle background sits behind the content */}
+          <ParticlesBackground />
+          <div className="z-10 text-center max-w-3xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight">
+              Akula Varshith <span className="block sm:inline">| Aspiring Software Engineer &amp; AI Specialist</span>
+            </h1>
+            <p className="mt-4 text-lg sm:text-xl md:text-2xl text-gray-300">
+              Building the next generation of data‑driven, cloud‑integrated solutions
+            </p>
+            {/* 360‑degree analytics callout: emphasise Power BI and Tableau under the title */}
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                {/* Simple bar chart icon */}
+                <svg className="w-6 h-6 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13v6M9 9v10M13 5v14M17 11v8" />
+                </svg>
+                <span className="text-gray-200 text-lg font-medium">Power BI</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {/* Pie chart icon */}
+                <svg className="w-6 h-6 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V11h5.118A6 6 0 0011 5.882z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-9-9" />
+                </svg>
+                <span className="text-gray-200 text-lg font-medium">Tableau</span>
+              </div>
+            </div>
+            <a href="#projects" className="inline-block mt-10 px-8 py-3 bg-[#FF6B6B] text-black font-semibold rounded-lg shadow-md hover:bg-[#e35e5e] transition-colors">
+              Learn More
+            </a>
+          </div>
+        </section>
+      );
+    }
+
+    // Experience section summarising the internship.
+    function Experience() {
+      return (
+        <section id="experience" className="py-16 px-4 bg-[#0a0a23]">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6">Experience</h2>
+            <div className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg">
+              <h3 className="text-xl font-semibold">Software Development Intern – Prodigy InfoTech</h3>
+              <p className="mt-3 text-gray-300 leading-relaxed">
+                During my internship at Prodigy InfoTech I focused on improving feature efficiency by 15%. This involved refactoring
+                existing modules, implementing performance monitoring and collaborating with cross‑functional teams to deliver
+                optimized features.
+              </p>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Projects gallery with two highlight cards.
+    function Projects() {
+      return (
+        <section id="projects" className="py-16 px-4 bg-[#0a0a23]">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6">Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                <h3 className="text-2xl font-semibold mb-2">Predictive Modelling for Cardiovascular Disease</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Built a CNN–LSTM model to predict cardiovascular disease risk with an accuracy of 90%. Utilised techniques such as
+                  convolutional sequence modelling and hyperparameter tuning to achieve high performance.
+                </p>
+                <span className="inline-block mt-4 bg-[#5f6cff]/20 text-[#5f6cff] px-3 py-1 rounded-full text-sm font-medium">
+                  90% accuracy
+                </span>
+              </div>
+              <div className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+                <h3 className="text-2xl font-semibold mb-2">Salesforce Student Support Agent</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Developed an intelligent support agent using Salesforce’s platform to assist students with course enquiries and support tasks.
+                  The agent integrates knowledge articles and natural language understanding to provide accurate responses.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Skills visualiser grouping languages, AI/ML tools and CRM.
+    function Skills() {
+      const skills = {
+        'Languages': ['Python', 'Java'],
+        'AI / ML': ['TensorFlow', 'Pandas'],
+        'Salesforce / CRM': ['Salesforce']
+      };
+      return (
+        <section id="skills" className="py-16 px-4 bg-[#0a0a23]">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6">Skills</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {Object.entries(skills).map(([category, items]) => (
+                <div key={category} className="bg-black/40 border border-gray-700 p-6 rounded-lg shadow-lg">
+                  <h3 className="text-xl font-semibold mb-4 text-[#FF6B6B]">{category}</h3>
+                  <ul className="space-y-3">
+                    {items.map(item => (
+                      <li key={item} className="flex items-center justify-between bg-black/30 border border-gray-700 px-3 py-2 rounded">
+                        <span>{item}</span>
+                        {/* Use a simple dot to visualise proficiency */}
+                        <span className="w-3 h-3 rounded-full bg-[#5f6cff]"></span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Certifications row with digital badge–style cards.
+    function Certifications() {
+      const certifications = [
+        { title: 'Oracle Generative AI Certified', color: '#F47E2A' },
+        { title: 'Salesforce Agentforce', color: '#00A1E0' },
+        { title: 'Wipro Java Full Stack', color: '#A47AFF' }
+      ];
+      return (
+        <section id="certifications" className="py-16 px-4 bg-[#0a0a23]">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6">Certifications</h2>
+            <div className="flex flex-wrap gap-6">
+              {certifications.map(cert => (
+                <div key={cert.title} className="flex items-center gap-3 px-4 py-3 bg-black/40 border border-gray-700 rounded-lg shadow">
+                  <span className="inline-block w-6 h-6 rounded-full" style={{ backgroundColor: cert.color }}></span>
+                  <span className="font-medium text-gray-200 whitespace-nowrap">{cert.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Analytics section emphasising Power BI and Tableau proficiency.
+    function Analytics() {
+      return (
+        <section id="analytics" className="py-16 px-4 bg-[#0a0a23]">
+          <div className="max-w-5xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">Analytics</h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              I build interactive dashboards and data visualizations using Power BI and Tableau, converting raw data into actionable
+              insights for stakeholders.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-12">
+              {/* Power BI card */}
+              <div className="flex flex-col items-center">
+                <div className="p-4 rounded-full bg-[#5f6cff]/20 border border-[#5f6cff]">
+                  {/* Represent analytics with a stack of bars icon */}
+                  <svg className="w-8 h-8 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 17v2m0-8v6m0-6V7m4 10v2m0-6v4m4 4v2m0-8v6m4 4v2m0-10v8m4 4v2m0-16v14" />
+                  </svg>
+                </div>
+                <span className="mt-3 text-lg font-semibold">Power BI</span>
+              </div>
+              {/* Tableau card */}
+              <div className="flex flex-col items-center">
+                <div className="p-4 rounded-full bg-[#5f6cff]/20 border border-[#5f6cff]">
+                  {/* Simple cross/star icon to hint at data blending */}
+                  <svg className="w-8 h-8 text-[#5f6cff]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12M6 12h12M9 9l6 6M15 9l-6 6" />
+                  </svg>
+                </div>
+                <span className="mt-3 text-lg font-semibold">Tableau</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // Footer with small credit.
+    function Footer() {
+      return (
+        <footer className="py-6 text-center bg-[#0a0a23] border-t border-gray-800 text-gray-500">
+          © {new Date().getFullYear()} Akula Varshith. All rights reserved.
+        </footer>
+      );
+    }
+
+    // Main app component that composes all sections together.
+    function App() {
+      return (
+        <div>
+          <Navbar />
+          <Hero />
+          <Experience />
+          <Projects />
+          <Skills />
+          <Certifications />
+          <Analytics />
+          <Footer />
+        </div>
+      );
+    }
+
+    // Render the App into the root element.
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
